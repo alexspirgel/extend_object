@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Extend</title>
+		<script src="extend.js"></script>
+	</head>
+	<body>
+		<h1>Open the console</h1>
+		<script>
+			var object_default = {
+				'a1': 1,
+				'a2': 1,
+				'b1': {
+					'ba': 1,
+					'bb': {
+						'bba': 1,
+						'bbb': 1
+					}
+				},
+				'b2': {
+					'ba': 1,
+					'bb': {
+						'bba': 1,
+						'bbb': 1
+					}
+				},
+				'c1': function (a) {return 1;},
+				'c2': function (a) {return 1;},
+				'd1': [1,2,3],
+				'd2': [1,2,3],
+				'e1': '1',
+				'e2': '1'
+			};
+
+			console.log('object_default:');
+			console.log(object_default);
+
+			var object_user = {
+				'a2': 999,
+				'b2': {
+					'bb': {
+						'bba': 999,
+						'bbc': [1, 'x', function test() {return 'hello, world!';}]
+					}
+				},
+				'c2': function (z) {return 999;},
+				'd2': [999],
+				'e2': '999',
+				'no_default': 'new option added'
+			};
+
+			console.log('object_user:');
+			console.log(object_user);
+
+			// Perform the merge.
+			var object_merged = extend_object({}, [object_default, object_user], true);
+
+			console.log('object_merged:');
+			console.log(object_merged);
+
+			console.log(object_merged.b2.bb.bbc[2]());
+		</script>
+	</body>
+</html>
