@@ -1,4 +1,9 @@
 /**
+ * object_extend v1.0.0
+ * https://github.com/alexspirgel/extend
+ */
+
+/**
  * Extends an object with another other object.
  *
  * @param {object} target_object The object that will receive the new properties.
