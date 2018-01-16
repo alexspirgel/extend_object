@@ -12,22 +12,20 @@ var extend_object = function (target_object, merge_objects, deep) {
 
 	var extend = function (target_object, merge_object, deep) {
 		for(var key in merge_object) {
-			if(deep) {
-				if(typeof merge_object[key] === 'object') {
-					// If the property value is an array.
-					if(Array.isArray(merge_object[key])) {
-						// Set the target property value equal to an empty array (arrays are replaced, not merged).
-						target_object[key] = [];
-					}
-					// If the target property is not an object.
-					else if(typeof target_object[key] !== 'object') {
-						// Set the target property value equal to an empty object.
-						target_object[key] = {};
-					}
-					extend(target_object[key], merge_object[key], deep);
-					// Continue to the next property (prevent copying over the entire object reference).
-					continue;
+			if(typeof merge_object[key] === 'object') {
+				// If the property value is an array.
+				if(Array.isArray(merge_object[key])) {
+					// Set the target property value equal to an empty array (arrays are replaced, not merged).
+					target_object[key] = [];
 				}
+				// If the target property is not an object or it is not a deep clone.
+				else if(typeof target_object[key] !== 'object' || !deep) {
+					// Set the target property value equal to an empty object.
+					target_object[key] = {};
+				}
+				extend(target_object[key], merge_object[key], deep);
+				// Continue to the next property (prevent copying over the entire object reference).
+				continue;
 			}
 			// If the property was not inherited.
 			if(merge_object.hasOwnProperty(key)){
