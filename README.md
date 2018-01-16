@@ -27,7 +27,7 @@ extend_object(object1, object2);
 
 ### Extend `object1` with an array of objects
 ```js
-extend_object(object1, [object2, object3, object...]);
+extend_object(object1, [object2, object3, object4, ...]);
 ```
 Extending with multiple objects extends them in the order of the array.
 In the example above, `object1` values would be overridden by `object2` values, then both `object1` and `object2` values would be overridden by `object3` values, etc..
