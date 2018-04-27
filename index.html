@@ -7,58 +7,183 @@
 	<body>
 		<h1>Open the console</h1>
 		<script>
-			var object_default = {
-				'a1': 1,
-				'a2': 1,
-				'b1': {
-					'ba': 1,
-					'bb': {
-						'bba': 1,
-						'bbb': 1
-					}
-				},
-				'b2': {
-					'ba': 1,
-					'bb': {
-						'bba': 1,
-						'bbb': 1
-					}
-				},
-				'c1': function (a) {return 1;},
-				'c2': function (a) {return 1;},
-				'd1': [1,2,3],
-				'd2': [1,2,3],
-				'e1': '1',
-				'e2': '1'
+			var test_primitives = function () {
+				console.log('==================================================');
+				console.log('Start primitives test...');
+
+				var object_1 = {
+					'boolean': true,
+					'boolean-old': false,
+					'null-from': null,
+					'null-to': 'becomes null',
+					'null-old': null,
+					'number': 0,
+					'number-old': 42,
+					'string': 'abc',
+					'string-old': 'qwerty',
+					'undefined-from': undefined,
+					'undefined-to': 'becomes undefined',
+					'undefined-old': undefined,
+				};
+
+				var object_2 = {
+					'boolean': false,
+					'boolean-new': true,
+					'null-from': 'not null',
+					'null-to': null,
+					'null-new': null,
+					'number': 7,
+					'number-new': 789,
+					'string': 'xyz',
+					'string-new': 'foo',
+					'undefined-from': 'not undefined',
+					'undefined-to': undefined,
+					'undefined-new': undefined
+				};
+
+				var object_result = extend({}, [object_1, object_2], false);
+
+				var object_1_test_pass = false;
+				if(object_1['boolean'] === true
+					&& object_1['boolean-old'] === false
+					&& object_1['null-from'] === null
+					&& object_1['null-to'] === 'becomes null'
+					&& object_1['null-old'] === null
+					&& object_1['number'] === 0
+					&& object_1['number-old'] === 42
+					&& object_1['string'] === 'abc'
+					&& object_1['string-old'] === 'qwerty'
+					&& object_1['undefined-from'] === undefined
+					&& object_1['undefined-to'] === 'becomes undefined'
+					&& object_1['undefined-old'] === undefined) {
+					object_1_test_pass = true;
+				}
+				else {
+					console.error('object_1: FAIL');
+				}
+
+				var object_2_test_pass = false;
+				if(object_2['boolean'] === false
+					&& object_2['boolean-new'] === true
+					&& object_2['null-from'] === 'not null'
+					&& object_2['null-to'] === null
+					&& object_2['null-new'] === null
+					&& object_2['number'] === 7
+					&& object_2['number-new'] === 789
+					&& object_2['string'] === 'xyz'
+					&& object_2['string-new'] === 'foo'
+					&& object_2['undefined-from'] === 'not undefined'
+					&& object_2['undefined-to'] === undefined
+					&& object_2['undefined-new'] === undefined) {
+					object_2_test_pass = true;
+				}
+				else {
+					console.error('object_2: FAIL');
+				}
+
+				var object_result_test_pass = false;
+				if(object_result['boolean'] === false
+					&& object_result['boolean-old'] === false
+					&& object_result['boolean-new'] === true
+					&& object_result['null-from'] === 'not null'
+					&& object_result['null-to'] === null
+					&& object_result['null-old'] === null
+					&& object_result['null-new'] === null
+					&& object_result['number'] === 7
+					&& object_result['number-old'] === 42
+					&& object_result['number-new'] === 789
+					&& object_result['string'] === 'xyz'
+					&& object_result['string-old'] === 'qwerty'
+					&& object_result['string-new'] === 'foo'
+					&& object_result['undefined-from'] === 'not undefined'
+					&& object_result['undefined-to'] === undefined
+					&& object_result['undefined-old'] === undefined
+					&& object_result['undefined-new'] === undefined) {
+					object_result_test_pass = true;
+				}
+				else {
+					console.error('object_result: FAIL');
+				}
+
+				if(object_1_test_pass && object_2_test_pass && object_result_test_pass) {
+					console.log('Result primitives test: PASS');
+				}
+				else {
+					console.error('Result primitives test: FAIL');
+				}
+			}
+			test_primitives();
+
+			var test_deep = function () {};
+
+			var test_all = function () {
+				var test_all_object_1 = {
+					'array_1': [],
+					'array_2': ['a', 'b', 'c'],
+					'array_3': ['d', 'e', ['f', 'g'], {'h': 'i', 'j': 'k'}],
+					'boolean_1': true,
+					'boolean_2': false,
+					'date_1': new Date(),
+					'function_1': function (abc) {return abc},
+					'number_1': 0,
+					'number_2': 0.0,
+					'number_3': 5,
+					'number_4': 46.8, 
+					'number_5': -93,
+					'number_6': -11.2,
+					'null_1': null,
+					'object_1': {},
+					'object_2': {'str': 'abc', 'num': 123},
+					'object_3': {
+						'1a': 'a',
+						'1b': {
+							'2a': 2,
+							'2b': function (xyz) {return 789;},
+							'2c': {
+								'3a': false,
+								'3b': {
+									'foo': null,
+									'bar': [1, 2, '3']
+								}
+							}
+						}
+					},
+					'string_1': '0',
+					'string_2': 'string',
+					'undefined_1': undefined
+				};
+				
+				var test_all_object_2 = {
+					'array_2': ['x', 'y', 'z'],
+					'boolean_1': false,
+					'boolean_2': true,
+					'date_1': new Date(new Date().getTime() + (1*60*60*1000)),
+					'date_2': new Date(new Date().getTime() + (2*60*60*1000)),
+					'function_1': function (qwerty) {return asdf},
+					'number_1': -0,
+					'number_2': 3,
+					'number_4': 0, 
+					'number_5': 1000009,
+					'object_3': {
+						'1b': {
+							'2c': {
+								'3b': {
+									'foo': 'not null'
+								},
+								'333': 'new property'
+							}
+						},
+						'1c': 'new property'
+					},
+					'string_1': null,
+					'string_2': '0',
+					'string_3': 'new string',
+					'undefined_1': 7
+				};
+
+				var test_object_extended = extend({}, [test_all_object_1, test_object_2], false);
+				var test_object_extended_deep = extend({}, [test_all_object_1, test_object_2], true);
 			};
-
-			console.log('object_default:');
-			console.log(object_default);
-
-			var object_user = {
-				'a2': 999,
-				'b2': {
-					'bb': {
-						'bba': 999,
-						'bbc': [1, 'x', function test() {return 'hello, world!';}]
-					}
-				},
-				'c2': function (z) {return 999;},
-				'd2': [999],
-				'e2': '999',
-				'no_default': 'new option added'
-			};
-
-			console.log('object_user:');
-			console.log(object_user);
-
-			// Perform the merge.
-			var object_merged = extend_object({}, [object_default, object_user], true);
-
-			console.log('object_merged:');
-			console.log(object_merged);
-
-			console.log(object_merged.b2.bb.bbc[2]());
 		</script>
 	</body>
 </html>
