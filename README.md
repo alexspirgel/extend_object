@@ -46,13 +46,13 @@ var clone_object = extend({}, object1, true);
 * Arrays will be replaced, not merged like non-array objects, even with the `deep` argument set to `true`.
 
 ## Known Issues:
-* Missing `NaN` specific variable handling.
+* None.
 
 ## Changelog
 
 ### Version 1.2.x
 * Changed `index.html` to a simple usage example.
-* Added `testing.html` to check intended functionality
+* Added `testing.html` to check intended functionality.
 
 ### Version 1.1.x
 * Added better handling for `null` variables.
