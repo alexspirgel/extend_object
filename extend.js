@@ -1,5 +1,5 @@
 /**
- * extend v1.1.0
+ * extend v1.2.0
  * https://github.com/alexspirgel/extend
  */
 
