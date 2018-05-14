@@ -17,7 +17,7 @@ An object, or an array of objects, containing additional properties to merge in.
 
 Set to `true` for nested object structure and values to be preserved. This parameter is optional.
 
-## Examples:
+## Usage:
 
 ### Extend `object1` with `object2`
 ```js
