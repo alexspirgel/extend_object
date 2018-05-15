@@ -51,8 +51,8 @@ var clone_object = extend({}, object1, true);
 ## Changelog
 
 ### Version 1.2.x
-* Changed `index.html` to a simple usage example.
-* Added `testing.html` to check intended functionality.
+* Changed `example.html` to a simple usage example.
+* Added `test.html` to check intended functionality.
 
 ### Version 1.1.x
 * Added better handling for `null` variables.
