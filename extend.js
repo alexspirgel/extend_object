@@ -1,5 +1,5 @@
 /**
- * extend v1.2.0
+ * extend v1.2.1
  * https://github.com/alexspirgel/extend
  */
 
@@ -19,16 +19,16 @@ var extend = function (target_object, merge_objects, deep) {
 	var extend_object = function (target_object, merge_object, deep) {
 		// For each property in the merge_object.
 		for(var property in merge_object) {
-			// If the current property value is an object, is not null, and the deep flag is true.
+			// If the merge_object value is an object, is not null, and the deep flag is true.
 			if(typeof merge_object[property] === 'object' && merge_object[property] !== null && deep) {
-				// If the current property value is an array.
+				// If the merge_object value is an array.
 				if(Array.isArray(merge_object[property])) {
-					// Set the target_object property value equal to an empty array (arrays are replaced, not merged).
+					// Set the target_object value equal to an empty array (arrays are replaced, not merged).
 					target_object[property] = [];
 				}
-				// If the target_object property value is not an object or if it is null.
+				// If the target_object value is not an object or if it is null.
 				else if(typeof target_object[property] !== 'object' || target_object[property] === null) {
-					// Set the target_object property value equal to an empty object.
+					// Set the target_object value equal to an empty object.
 					target_object[property] = {};
 				}
 				// Call the extend_object function recursively.
@@ -36,7 +36,7 @@ var extend = function (target_object, merge_objects, deep) {
 				// Continue to the next property, skipping the normal value assignment.
 				continue;
 			}
-			// Set the target_object property value equal to the merge_object property value (for primitive values or shallow calls only).
+			// Set the target_object property value equal to the merge_object property value (primitive values or shallow calls).
 			target_object[property] = merge_object[property];
 		}
 		// Return the target_object.
@@ -44,7 +44,9 @@ var extend = function (target_object, merge_objects, deep) {
 	};
 
 	// If merge_objects is not an array, make it an array.
-	merge_objects = Array.isArray(merge_objects) ? merge_objects : [merge_objects];
+	if(!Array.isArray(merge_objects)) {
+		merge_objects = [merge_objects];
+	}
 	// For each object in merge_objects.
 	for(var object = 0; object < merge_objects.length; object++) {
 		// Extend the target_object with the merge_object.
