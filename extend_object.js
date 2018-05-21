@@ -1,6 +1,6 @@
 /**
- * extend v1.2.1
- * https://github.com/alexspirgel/extend
+ * extend_object v1.2.1
+ * https://github.com/alexspirgel/extend_object
  */
 
 /**
@@ -13,10 +13,10 @@
  * @return {object} The extended target_object.
  */
 
-var extend = function (target_object, merge_objects, deep) {
+var extend_object = function (target_object, merge_objects, deep) {
 	'use strict';
 
-	var extend_object = function (target_object, merge_object, deep) {
+	var extend = function (target_object, merge_object, deep) {
 		// For each property in the merge_object.
 		for(var property in merge_object) {
 			// If the merge_object value is an object, is not null, and the deep flag is true.
@@ -31,8 +31,8 @@ var extend = function (target_object, merge_objects, deep) {
 					// Set the target_object value equal to an empty object.
 					target_object[property] = {};
 				}
-				// Call the extend_object function recursively.
-				extend_object(target_object[property], merge_object[property], deep);
+				// Call the extend function recursively.
+				extend(target_object[property], merge_object[property], deep);
 				// Continue to the next property, skipping the normal value assignment.
 				continue;
 			}
@@ -50,7 +50,7 @@ var extend = function (target_object, merge_objects, deep) {
 	// For each object in merge_objects.
 	for(var object = 0; object < merge_objects.length; object++) {
 		// Extend the target_object with the merge_object.
-		extend_object(target_object, merge_objects[object], deep);
+		extend(target_object, merge_objects[object], deep);
 	}
 
 	// Return the extended target_object.
