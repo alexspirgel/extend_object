@@ -1,0 +1,27 @@
+{
+  "name": "extend",
+  "version": "1.2.1",
+  "description": "Extends an object with vanilla JavaScript.",
+  "main": "extend.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexspirgel/extend.git"
+  },
+  "keywords": [
+    "vanilla",
+    "JavaScript",
+    "extend",
+    "deep",
+    "clone",
+    "object"
+  ],
+  "author": "Alexander Spirgel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexspirgel/extend/issues"
+  },
+  "homepage": "https://github.com/alexspirgel/extend#readme"
+}
