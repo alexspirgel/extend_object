@@ -57,5 +57,8 @@ var extend = function (target_object, merge_objects, deep) {
 	return target_object;
 };
 
-// Export the extend function.
-exports.extend = extend;
+// Check for module variable to determine if script is being implemented as a node module.
+if(typeof module !== 'undefined') {
+	// Export the extend function.
+	module.exports.extend = extend;
+}
