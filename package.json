@@ -1,5 +1,5 @@
 {
-  "name": "extend",
+  "name": "@alexspirgel/extend",
   "version": "1.2.1",
   "description": "Extends an object with vanilla JavaScript.",
   "main": "extend.js",
