@@ -19,7 +19,7 @@
     "object"
   ],
   "author": "Alexander Spirgel",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/alexspirgel/extend/issues"
   },
