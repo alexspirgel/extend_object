@@ -21,6 +21,13 @@ var extend = function (target_object, merge_objects, deep) {
 		for(var property in merge_object) {
 			// If the merge_object value is an object, is not null, and the deep flag is true.
 			if(typeof merge_object[property] === 'object' && merge_object[property] !== null && deep) {
+				// If the merge_object value is a special case.
+				if(merge_object[property].toString() === '[object Window]' || merge_object[property].toString() === '[object HTMLDocument]') {
+					// Set the target_object property value equal to the merge_object property value.
+					target_object[property] = merge_object[property];
+					// Continue past the normal deep object handling.
+					continue;
+				}
 				// If the merge_object value is an array.
 				if(Array.isArray(merge_object[property])) {
 					// Set the target_object value equal to an empty array (arrays are replaced, not merged).
