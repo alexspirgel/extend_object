@@ -45,18 +45,20 @@ var clone_object = extend({}, object1, true);
 ## Notes:
 * Arrays will be replaced, not merged like non-array objects, even with the `deep` argument set to `true`.
 
-## Known Issues:
-* None.
-
 ## Changelog
 
-### Version 1.2.x
+### Version 2.0.0
+* Restructured for ES6 module syntax.
+* Added special case handling for deep extending with `document` and `window` objects.
+* Removed example folder in favor of readme.
+
+### Version 1.1.1
 * Changed `example.html` to a simple usage example.
 * Added `test.html` to check intended functionality.
 
-### Version 1.1.x
+### Version 1.1.0
 * Added better handling for `null` variables.
 * Added clearer comments.
 
-### Version 1.0.x
+### Version 1.0.0
 * Script creation.

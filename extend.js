@@ -1,5 +1,5 @@
 /**
- * extend v1.2.1
+ * extend v2.0.0
  * https://github.com/alexspirgel/extend
  */
 
@@ -13,12 +13,11 @@
  * @return {object} The extended target_object.
  */
 
-var extend = function (target_object, merge_objects, deep) {
-	'use strict';
+const extend = (target_object, merge_objects, deep) => {
 
-	var extend_object = function (target_object, merge_object, deep) {
+	const extendObject = (target_object, merge_object, deep) => {
 		// For each property in the merge_object.
-		for(var property in merge_object) {
+		for(let property in merge_object) {
 			// If the merge_object value is an object, is not null, and the deep flag is true.
 			if(typeof merge_object[property] === 'object' && merge_object[property] !== null && deep) {
 				// If the merge_object value is a special case.
@@ -38,8 +37,8 @@ var extend = function (target_object, merge_objects, deep) {
 					// Set the target_object value equal to an empty object.
 					target_object[property] = {};
 				}
-				// Call the extend_object function recursively.
-				extend_object(target_object[property], merge_object[property], deep);
+				// Call the extendObject function recursively.
+				extendObject(target_object[property], merge_object[property], deep);
 				// Continue to the next property, skipping the normal value assignment.
 				continue;
 			}
@@ -55,17 +54,14 @@ var extend = function (target_object, merge_objects, deep) {
 		merge_objects = [merge_objects];
 	}
 	// For each object in merge_objects.
-	for(var object = 0; object < merge_objects.length; object++) {
+	for(let object = 0; object < merge_objects.length; object++) {
 		// Extend the target_object with the merge_object.
-		extend_object(target_object, merge_objects[object], deep);
+		extendObject(target_object, merge_objects[object], deep);
 	}
 
 	// Return the extended target_object.
 	return target_object;
 };
 
-// Check for module variable to determine if script is being implemented as a node module.
-if(typeof module !== 'undefined') {
-	// Export the extend function.
-	module.exports.extend = extend;
-}
+// Export the extend function.
+export default extend;

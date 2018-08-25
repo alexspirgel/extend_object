@@ -1,11 +1,8 @@
 {
   "name": "@alexspirgel/extend",
-  "version": "1.2.1",
+  "version": "2.0.0",
   "description": "Extends an object with vanilla JavaScript.",
   "main": "extend.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alexspirgel/extend.git"
