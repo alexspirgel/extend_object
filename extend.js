@@ -4,36 +4,45 @@
  */
 
 /**
- * Extends an object with another other object.
+ * Extends an object with another object(s).
  *
- * @param {object} target_object The object that will receive the new properties and values.
- * @param {object|array} merge_objects An object or array of objects to be merged into the target_object.
- * @param {boolean} [deep] If true, the extend becomes recursive (aka. deep clone).
+ * @param {array} objects - Array of objects containing the resulting object and the objects to merge into it.
+ * @param {boolean} [deep] - Optional flag to enable or disable recursive merge.
  *
- * @return {object} The extended target_object.
+ * @returns {object} The object that has been extended.
  */
 
-const extend = (target_object, merge_objects, deep) => {
+const extend = (objects, deep) => {
+
+	/**
+	 * Extends an object with another object.
+	 *
+	 * @param {object} target_object - The target object to be merged into.
+	 * @param {object} merge_object - The object to merge into the target object.
+	 * @param {boolean} [deep] - Optional flag to enable or disable recursive merge.
+	 *
+	 * @returns {object} The object that has been extended.
+	 */
 
 	const extendObject = (target_object, merge_object, deep) => {
 		// For each property in the merge_object.
-		for(let property in merge_object) {
+		for (let property in merge_object) {
 			// If the merge_object value is an object, is not null, and the deep flag is true.
-			if(typeof merge_object[property] === 'object' && merge_object[property] !== null && deep) {
+			if (typeof merge_object[property] === 'object' && merge_object[property] !== null && deep) {
 				// If the merge_object value is a special case.
-				if(merge_object[property].toString() === '[object Window]' || merge_object[property].toString() === '[object HTMLDocument]') {
+				if (merge_object[property].toString() === '[object Window]' || merge_object[property].toString() === '[object HTMLDocument]') {
 					// Set the target_object property value equal to the merge_object property value.
 					target_object[property] = merge_object[property];
 					// Continue past the normal deep object handling.
 					continue;
 				}
 				// If the merge_object value is an array.
-				if(Array.isArray(merge_object[property])) {
+				if (Array.isArray(merge_object[property])) {
 					// Set the target_object value equal to an empty array (arrays are replaced, not merged).
 					target_object[property] = [];
 				}
 				// If the target_object value is not an object or if it is null.
-				else if(typeof target_object[property] !== 'object' || target_object[property] === null) {
+				else if (typeof target_object[property] !== 'object' || target_object[property] === null) {
 					// Set the target_object value equal to an empty object.
 					target_object[property] = {};
 				}
@@ -47,21 +56,26 @@ const extend = (target_object, merge_objects, deep) => {
 		}
 		// Return the target_object.
 		return target_object;
-	};
+	}; // End function extendObject.
 
-	// If merge_objects is not an array, make it an array.
-	if(!Array.isArray(merge_objects)) {
-		merge_objects = [merge_objects];
+	// If objects length is greater than 1.
+	if (objects.length > 1) {
+		// For each object in objects (skipping the first object).
+		for (let object = 1; object < objects.length; object++) {
+			// If the current loop item is an object and not null.
+			if (typeof objects[object] === 'object' && objects[object] !== null) {
+				// Extend the first object with the current loop object.
+				extendObject(objects[0], objects[object], deep);
+			}
+		}
 	}
-	// For each object in merge_objects.
-	for(let object = 0; object < merge_objects.length; object++) {
-		// Extend the target_object with the merge_object.
-		extendObject(target_object, merge_objects[object], deep);
-	}
+	// Return the first object in the array.
+	return objects[0];
 
-	// Return the extended target_object.
-	return target_object;
-};
+}; // End function extend.
 
-// Export the extend function.
-export default extend;
+// If script is being required as a node module.
+if (typeof module !== 'undefined' && module.exports) {
+	// Export the extend function.
+	module.exports = extend;
+}
