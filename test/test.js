@@ -1,6 +1,3 @@
-// Import extend function.
-import extend from '../extend.js';
-
 var objects_match = function (object_1, object_2) {
 	// Create arrays of property names
 	var object_1_properties = Object.getOwnPropertyNames(object_1).sort();
@@ -191,7 +188,7 @@ var test_object_2_duplicate = {
 
 var test = function () {
 	var test_object_copy = function () {
-		var result_object_1 = extend({}, test_object_1);
+		var result_object_1 = extend([{}, test_object_1]);
 
 		if(objects_match(test_object_1, test_object_1_duplicate) &&
 			objects_match(test_object_1, result_object_1)) {
@@ -204,7 +201,7 @@ var test = function () {
 	test_object_copy();
 
 	var test_shallow_merge_new_object = function () {
-		var result_object_2 = extend({}, [test_object_1, test_object_2]);
+		var result_object_2 = extend([{}, test_object_1, test_object_2]);
 
 		var result_object_2_expected = {
 			'array_1': [],
@@ -253,7 +250,7 @@ var test = function () {
 	test_shallow_merge_new_object();
 
 	var test_deep_merge_new_object = function () {
-		var result_object_3 = extend({}, [test_object_1, test_object_2], true);
+		var result_object_3 = extend([{}, test_object_1, test_object_2], true);
 
 		var result_object_3_expected = {
 			'array_1': [],
