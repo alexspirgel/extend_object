@@ -1,0 +1,8 @@
+# Test Files
+test/
+
+# Linter Files
+.jshintrc
+
+# Text Editor Files
+*.sublime*
