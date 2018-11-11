@@ -1,5 +1,5 @@
 /**
- * extend v2.0.0
+ * extend v2.0.1
  * https://github.com/alexspirgel/extend
  */
 
@@ -30,7 +30,7 @@ const extend = (objects, deep) => {
 			// If the merge_object value is an object, is not null, and the deep flag is true.
 			if (typeof merge_object[property] === 'object' && merge_object[property] !== null && deep) {
 				// If the merge_object value is a special case.
-				if (merge_object[property].toString() === '[object Window]' || merge_object[property].toString() === '[object HTMLDocument]') {
+				if (merge_object[property] instanceof Window || merge_object[property] instanceof HTMLDocument || merge_object[property] instanceof Element) {
 					// Set the target_object property value equal to the merge_object property value.
 					target_object[property] = merge_object[property];
 					// Continue past the normal deep object handling.

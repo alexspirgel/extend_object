@@ -1,4 +1,7 @@
 var objects_match = function (object_1, object_2) {
+	if (object_1 instanceof Window && object_2 instanceof Window) {
+		return true;
+	}
 	// Create arrays of property names
 	var object_1_properties = Object.getOwnPropertyNames(object_1).sort();
 	var object_2_properties = Object.getOwnPropertyNames(object_2).sort();
@@ -186,6 +189,15 @@ var test_object_2_duplicate = {
 	'undefined_1': 7
 };
 
+var special_case_object_1 = {
+	'document': 'uhhh',
+	'element': document.querySelector('body')
+};
+var special_case_object_2 = {
+	'document': document,
+	'window': window
+};
+
 var test = function () {
 	var test_object_copy = function () {
 		var result_object_1 = extend([{}, test_object_1]);
@@ -302,5 +314,24 @@ var test = function () {
 		}
 	};
 	test_deep_merge_new_object();
+
+	var test_special_cases = function () {
+
+		var result_object_4 = extend([{}, special_case_object_1, special_case_object_2], true);
+
+		var result_object_4_expected = {
+			'document': document,
+			'window': window,
+			'element': document.querySelector('body')
+		};
+
+		if(objects_match(result_object_4, result_object_4_expected)) {
+			console.log('PASS test_special_cases');
+		}
+		else {
+			console.error('FAIL test_special_cases');
+		}
+	};
+	test_special_cases();
 };
 test();
