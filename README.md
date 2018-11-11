@@ -43,4 +43,5 @@ var clone_object = extend([{}, object1], true);
 `clone_object` will be a clone of `object1`.
 
 ## Notes:
-* Arrays will be replaced, not merged, even with the `deep` argument set to `true`.
+* NodeLists are converted to arrays.
+* Arrays are replaced, not merged, even with the `deep` argument set to `true`.

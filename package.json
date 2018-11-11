@@ -1,6 +1,6 @@
 {
   "name": "@alexspirgel/extend",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Extends an object with vanilla JavaScript.",
   "main": "extend.js",
   "repository": {

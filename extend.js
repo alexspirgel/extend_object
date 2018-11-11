@@ -1,5 +1,5 @@
 /**
- * extend v2.0.2
+ * extend v2.0.3
  * https://github.com/alexspirgel/extend
  */
 
@@ -37,7 +37,10 @@ const extend = (objects, deep) => {
 					continue;
 				}
 				// If the merge_object value is an array.
-				if (Array.isArray(merge_object[property])) {
+				if (Array.isArray(merge_object[property]) || merge_object[property] instanceof NodeList) {
+					if (merge_object[property] instanceof NodeList) {
+						merge_object[property] = Array.from(merge_object[property]);
+					}
 					// Set the target_object value equal to an empty array (arrays are replaced, not merged).
 					target_object[property] = [];
 				}

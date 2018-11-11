@@ -195,7 +195,8 @@ var special_case_object_1 = {
 };
 var special_case_object_2 = {
 	'document': document,
-	'window': window
+	'window': window,
+	'nodelist': document.querySelectorAll('body')
 };
 
 var test = function () {
@@ -322,7 +323,8 @@ var test = function () {
 		var result_object_4_expected = {
 			'document': document,
 			'window': window,
-			'element': document.querySelector('body')
+			'element': document.querySelector('body'),
+			'nodelist': Array.from(document.querySelectorAll('body'))
 		};
 
 		if(objects_match(result_object_4, result_object_4_expected)) {
