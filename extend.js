@@ -1,5 +1,5 @@
 /**
- * extend v2.0.3
+ * extend v2.0.4
  * https://github.com/alexspirgel/extend
  */
 
@@ -30,15 +30,15 @@ const extend = (objects, deep) => {
 			// If the merge_object value is an object, is not null, and the deep flag is true.
 			if (typeof merge_object[property] === 'object' && merge_object[property] !== null && deep) {
 				// If the merge_object value is a special case.
-				if (merge_object[property] instanceof Window || merge_object[property] instanceof HTMLDocument || merge_object[property] instanceof Element) {
+				if ((typeof Window !== 'undefined' && merge_object[property] instanceof Window) || (typeof HTMLDocument !== 'undefined' && merge_object[property] instanceof HTMLDocument) || (typeof Element !== 'undefined' && merge_object[property] instanceof Element)) {
 					// Set the target_object property value equal to the merge_object property value.
 					target_object[property] = merge_object[property];
 					// Continue past the normal deep object handling.
 					continue;
 				}
 				// If the merge_object value is an array.
-				if (Array.isArray(merge_object[property]) || merge_object[property] instanceof NodeList) {
-					if (merge_object[property] instanceof NodeList) {
+				if (Array.isArray(merge_object[property]) || (typeof Nodelist !== 'undefined' && merge_object[property] instanceof NodeList)) {
+					if ((typeof Nodelist !== 'undefined' && merge_object[property] instanceof NodeList)) {
 						merge_object[property] = Array.from(merge_object[property]);
 					}
 					// Set the target_object value equal to an empty array (arrays are replaced, not merged).
