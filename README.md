@@ -1,47 +1,41 @@
 # extend
-Extends an object with vanilla JavaScript.
+Extends a value with another value using vanilla JavaScript. Similar in functionality to the jQuery extend function.
 
-## Parameters:
+Notes:
 
-**target_object**
+* This function always performs a deep copy, there is no shallow copy option. Native solutions now exist for shallow copying.
+* `undefined` values will not be merged into the target.
 
-An object that will receive new properties and/or values from the `merge_objects`.
+## Installation
 
-**merge_objects**
+### Using NPM:
 
-An object, or an array of objects, containing additional properties to merge in.
-
-**deep**
-
-Set to `true` for nested object structure and values to be preserved. This parameter is optional.
-
-## Usage:
-
-### Extend `object1` with `object2`
 ```js
-extend([object1, object2]);
+npm install @alexspirgel/extend
 ```
-`object2` will be merged into `object1`.
 
-### Extend `object1` with an array of objects
 ```js
-extend([object1, object2, object3, object4, ...]);
+const extend = require('@alexspirgel/extend');
 ```
-Extending with multiple objects extends them in the order of the array.
-In the example above, `object1` values would be overridden by `object2` values, then both `object1` and `object2` values would be overridden by `object3` values, etc...
 
-### Extend a new object with multiple objects
+### Using a script tag:
+
+Download the `extend.js` file.
+
+```html
+<script src="path/to/extend.js"></script>
+```
+
+## Usage
+
+### Extend an object with other objects
 ```js
-var new_object = extend([{}, object1, object2]);
+extend(object1, object2, objects3);
 ```
-`new_object` will contain the values from `object1`, overridden by `object2`. Neither of the original objects will be changed.
+`object2` and `object3` will be merged into `object1`.
 
-### Extend a new object with a single object to create a clone
+### Clone an object
 ```js
-var clone_object = extend([{}, object1], true);
+var object2 = extend({}, object1);
 ```
-`clone_object` will be a clone of `object1`.
-
-## Notes:
-* NodeLists are converted to arrays.
-* Arrays are replaced, not merged, even with the `deep` argument set to `true`.
+`object2` will be a clone of `object1`.

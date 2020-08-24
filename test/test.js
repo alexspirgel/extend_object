@@ -1,339 +1,194 @@
-var objects_match = function (object_1, object_2) {
-	if (object_1 instanceof Window && object_2 instanceof Window) {
-		return true;
-	}
-	// Create arrays of property names
-	var object_1_properties = Object.getOwnPropertyNames(object_1).sort();
-	var object_2_properties = Object.getOwnPropertyNames(object_2).sort();
+const extend = require('../extend.js');
 
-	// If the number of properties are not equal.
-	if (object_1_properties.length !== object_2_properties.length) {
-		console.warn('objects_match: The number of object properties no not match.');
-		return false;
-	}
-
-	// For each property in object_1
-	for(var i = 0; i < object_1_properties.length; i++) {
-
-		var object_1_property = object_1_properties[i];
-		var object_2_property = object_2_properties[i];
-
-		// If the object_1 property does not equal the object_2 property.
-		if(object_1_property !== object_2_property) {
-			console.warn('objects_match: The properties of the objects do not match. (' + object_1_property + ' != ' + object_2_property + ')');
-			return false;
-		}
-
-		var object_1_value = object_1[object_1_property];
-		var object_2_value = object_2[object_2_property];
-
-		// If the types of the object values do not match.
-		if(typeof object_1_value !== typeof object_2_value) {
-			console.warn('objects_match: The `' + object_1_property + '` value types do not match.');
-			return false;
-		}
-
-		// If the values are objects.
-		if(typeof object_1_value === 'object' && object_1_value !== null &&
-			typeof object_2_value === 'object' && object_2_value !== null) {
-			// Recursive function call.
-			if(objects_match(object_1_value, object_2_value) === false) {
-				return false;
-			}
-		}
-
-		// If the values are functions.
-		else if(typeof object_1_value === 'function' && typeof object_2_value === 'function') {
-			// Skip.
-		}
-
-		// If the type of values are neither objects or functions.
-		else {
-			// If one value does not equal the other.
-			if(object_1_value !== object_2_value) {
-				console.warn('objects_match: The `' + object_1_property + '` values do not match.');
-				return false;
-			}
-		}
-	}
-
-	// If we made it this far, the objects match.
-	return true;
-};
-
-var test_object_1 = {
-	'array_1': [],
-	'array_2': ['a', 'b', 'c'],
-	'array_3': ['d', 'e', ['f', 'g'], {'h': 'i', 'j': 'k'}],
-	'boolean_1': true,
-	'boolean_2': false,
-	'date_1': new Date(),
-	'function_1': function (abc) {return abc;},
-	'number_1': 0,
-	'number_2': 0.0,
-	'number_3': 5,
-	'number_4': 46.8,
-	'number_5': -93,
-	'number_6': -11.2,
-	'null_1': null,
-	'object_1': {},
-	'object_2': {'str': 'abc', 'num': 123},
-	'object_3': {
-		'1a': 'a',
-		'1b': {
-			'2a': 2,
-			'2b': function (xyz) {return 789;},
-			'2c': {
-				'3a': false,
-				'3b': {
-					'foo': null,
-					'bar': [1, 2, '3']
+describe('isPlainObject', function () {
+	describe('plain object', function () {
+		it(`should return true`, function () {
+			let value = {
+				a: 1,
+				b: 2,
+				c: {
+					a: 1
 				}
+			};
+			let result = extend.isPlainObject(value);
+			if (result === true) {
+				return true;
 			}
-		}
-	},
-	'string_1': '0',
-	'string_2': 'string',
-	'undefined_1': undefined
-};
+			throw new Error();
+		});
+	});
+	describe('empty object', function () {
+		it(`should return true`, function () {
+			let value = {};
+			let result = extend.isPlainObject(value);
+			if (result === true) {
+				return true;
+			}
+			throw new Error();
+		});
+	});
+	describe('null', function () {
+		it(`should return false`, function () {
+			let value = null;
+			let result = extend.isPlainObject(value);
+			if (result === false) {
+				return true;
+			}
+			throw new Error();
+		});
+	});
+	describe('native object (Error class)', function () {
+		it(`should return false`, function () {
+			let value = Error;
+			let result = extend.isPlainObject(value);
+			if (result === false) {
+				return true;
+			}
+			throw new Error();
+		});
+	});
+	describe('undefined', function () {
+		it(`should return false`, function () {
+			let result = extend.isPlainObject(undefined);
+			if (result === false) {
+				return true;
+			}
+			throw new Error();
+		});
+	});
+	describe('primitive', function () {
+		it(`should return false`, function () {
+			let value1 = true;
+			let value2 = 5;
+			let value3 = 'hello';
+			let result1 = extend.isPlainObject(value1);
+			let result2 = extend.isPlainObject(value2);
+			let result3 = extend.isPlainObject(value3);
+			if (result1 !== true && result2 !== true && result3 !== true) {
+				return true;
+			}
+			throw new Error();
+		});
+	});
+	describe('array', function () {
+		it(`should return false`, function () {
+			let value = [];
+			let result = extend.isPlainObject(value);
+			if (result === false) {
+				return true;
+			}
+			throw new Error();
+		});
+	});
+});
 
-var test_object_1_duplicate = {
-	'array_1': [],
-	'array_2': ['a', 'b', 'c'],
-	'array_3': ['d', 'e', ['f', 'g'], {'h': 'i', 'j': 'k'}],
-	'boolean_1': true,
-	'boolean_2': false,
-	'date_1': new Date(),
-	'function_1': function (abc) {return abc;},
-	'number_1': 0,
-	'number_2': 0.0,
-	'number_3': 5,
-	'number_4': 46.8,
-	'number_5': -93,
-	'number_6': -11.2,
-	'null_1': null,
-	'object_1': {},
-	'object_2': {'str': 'abc', 'num': 123},
-	'object_3': {
-		'1a': 'a',
-		'1b': {
-			'2a': 2,
-			'2b': function (xyz) {return 789;},
-			'2c': {
-				'3a': false,
-				'3b': {
-					'foo': null,
-					'bar': [1, 2, '3']
+describe('extend', function () {
+  describe('primitive, primitive', function () {
+		it(`should return the second primitive`, function () {
+			let value1 = 'hello';
+			let value2 = 'world';
+			const result = extend(value1, value2);
+			if (result === 'world' &&
+			value1 === 'hello' &&
+			value2 === 'world') {
+				return true;
+			}
+			throw new Error();
+		});
+	});
+	describe('plain shallow object, plain shallow object', function () {
+		it(`should return the first object with properties overridden by those present in the second object`, function () {
+			let value1 = {
+				a: 1,
+				b: 2,
+				c: 3
+			};
+			let value2 = {
+				b: 2,
+				c: 4,
+				d: 5
+			};
+			const result = extend(value1, value2);
+			if (result.a === 1 &&
+				result.b === 2 &&
+				result.c === 4 &&
+				result.d === 5 &&
+				result === value1 &&
+				result !== value2) {
+				return true;
+			}
+			throw new Error();
+		});
+	});
+	describe('plain deep object, plain deep object', function () {
+		it(`should return the first object with properties overridden by those present in the second object`, function () {
+			let value1 = {
+				a: 1,
+				b: {
+					a: 1,
+					b: 2,
+					c: 3
+				},
+				c: {
+					a: 1,
+					b: 2,
+					c: 3
 				}
+			};
+			let value2 = {
+				b: 2,
+				c: {
+					b: 2,
+					c: 4,
+					d: 5
+				},
+				d: {
+					b: 2,
+					c: 4,
+					d: 5
+				}
+			};
+			const result = extend(value1, value2);
+			if (result.a === 1 &&
+				result.b === 2 &&
+				result.c.a === 1 &&
+				result.c.b === 2 &&
+				result.c.c === 4 &&
+				result.c.d === 5 &&
+				result.d.b === 2 &&
+				result.d.c === 4 &&
+				result.d.d === 5 &&
+				result === value1 &&
+				result !== value2) {
+				return true;
 			}
-		}
-	},
-	'string_1': '0',
-	'string_2': 'string',
-	'undefined_1': undefined
-};
-
-var test_object_2 = {
-	'array_2': ['x', 'y', 'z'],
-	'boolean_1': false,
-	'boolean_2': true,
-	'date_1': new Date(new Date().getTime() + (1*60*60*1000)), // Add one hour
-	'date_2': new Date(new Date().getTime() + (2*60*60*1000)), // Add 2 hours
-	'function_1': function (qwerty) {return qwerty;},
-	'number_1': -0,
-	'number_2': 3,
-	'number_4': 0, 
-	'number_5': 1000009,
-	'object_3': {
-		'1b': {
-			'2c': {
-				'3b': {
-					'foo': 'not null'
-				},
-				'333': 'new property'
+			throw new Error();
+		});
+	});
+	describe('primitive, null', function () {
+		it(`should return null`, function () {
+			let value1 = 'hello';
+			let value2 = null;
+			const result = extend(value1, value2);
+			if (result === null &&
+			value1 === 'hello' &&
+			value2 === null) {
+				return true;
 			}
-		},
-		'1c': 'new property'
-	},
-	'string_1': null,
-	'string_2': '0',
-	'string_3': 'new string',
-	'undefined_1': 7
-};
-
-var test_object_2_duplicate = {
-	'array_2': ['x', 'y', 'z'],
-	'boolean_1': false,
-	'boolean_2': true,
-	'date_1': new Date(new Date().getTime() + (1*60*60*1000)), // Add one hour
-	'date_2': new Date(new Date().getTime() + (2*60*60*1000)), // Add 2 hours
-	'function_1': function (qwerty) {return qwerty;},
-	'number_1': -0,
-	'number_2': 3,
-	'number_4': 0, 
-	'number_5': 1000009,
-	'object_3': {
-		'1b': {
-			'2c': {
-				'3b': {
-					'foo': 'not null'
-				},
-				'333': 'new property'
+			throw new Error();
+		});
+	});
+	describe('primitive, undefined', function () {
+		it(`should return the first value, undefined should not be merged`, function () {
+			let value1 = 'hello';
+			let value2;
+			const result = extend(value1, value2);
+			if (result === 'hello' &&
+			value1 === 'hello' &&
+			value2 === undefined) {
+				return true;
 			}
-		},
-		'1c': 'new property'
-	},
-	'string_1': null,
-	'string_2': '0',
-	'string_3': 'new string',
-	'undefined_1': 7
-};
-
-var special_case_object_1 = {
-	'document': 'uhhh',
-	'element': document.querySelector('body')
-};
-var special_case_object_2 = {
-	'document': document,
-	'window': window,
-	'nodelist': document.querySelectorAll('body')
-};
-
-var test = function () {
-	var test_object_copy = function () {
-		var result_object_1 = extend([{}, test_object_1]);
-
-		if(objects_match(test_object_1, test_object_1_duplicate) &&
-			objects_match(test_object_1, result_object_1)) {
-			console.log('PASS test_object_copy');
-		}
-		else {
-			console.error('FAIL test_object_copy');
-		}
-	};
-	test_object_copy();
-
-	var test_shallow_merge_new_object = function () {
-		var result_object_2 = extend([{}, test_object_1, test_object_2]);
-
-		var result_object_2_expected = {
-			'array_1': [],
-			'array_2': ['x', 'y', 'z'],
-			'array_3': ['d', 'e', ['f', 'g'], {'h': 'i', 'j': 'k'}],
-			'boolean_1': false,
-			'boolean_2': true,
-			'date_1': new Date(new Date().getTime() + (1*60*60*1000)),
-			'date_2': new Date(new Date().getTime() + (2*60*60*1000)),
-			'function_1': function (qwerty) {return qwerty;},
-			'number_1': -0,
-			'number_2': 3,
-			'number_3': 5,
-			'number_4': 0, 
-			'number_5': 1000009,
-			'number_6': -11.2,
-			'null_1': null,
-			'object_1': {},
-			'object_2': {'str': 'abc', 'num': 123},
-			'object_3': {
-				'1b': {
-					'2c': {
-						'3b': {
-							'foo': 'not null'
-						},
-						'333': 'new property'
-					}
-				},
-				'1c': 'new property'
-			},
-			'string_1': null,
-			'string_2': '0',
-			'string_3': 'new string',
-			'undefined_1': 7
-		};
-
-		if(objects_match(test_object_1, test_object_1_duplicate) &&
-			objects_match(test_object_2, test_object_2_duplicate) &&
-			objects_match(result_object_2, result_object_2_expected)) {
-			console.log('PASS test_shallow_merge_new_object');
-		}
-		else {
-			console.error('FAIL test_shallow_merge_new_object');
-		}
-	};
-	test_shallow_merge_new_object();
-
-	var test_deep_merge_new_object = function () {
-		var result_object_3 = extend([{}, test_object_1, test_object_2], true);
-
-		var result_object_3_expected = {
-			'array_1': [],
-			'array_2': ['x', 'y', 'z'],
-			'array_3': ['d', 'e', ['f', 'g'], {'h': 'i', 'j': 'k'}],
-			'boolean_1': false,
-			'boolean_2': true,
-			'date_1': new Date(new Date().getTime() + (1*60*60*1000)),
-			'date_2': new Date(new Date().getTime() + (2*60*60*1000)),
-			'function_1': function (qwerty) {return qwerty;},
-			'number_1': -0,
-			'number_2': 3,
-			'number_3': 5,
-			'number_4': 0, 
-			'number_5': 1000009,
-			'number_6': -11.2,
-			'null_1': null,
-			'object_1': {},
-			'object_2': {'str': 'abc', 'num': 123},
-			'object_3': {
-				'1a': 'a',
-				'1b': {
-					'2a': 2,
-					'2b': function (xyz) {return 789;},
-					'2c': {
-						'3a': false,
-						'3b': {
-							'foo': 'not null',
-							'bar': [1, 2, '3']
-						},
-						'333': 'new property'
-					}
-				},
-				'1c': 'new property'
-			},
-			'string_1': null,
-			'string_2': '0',
-			'string_3': 'new string',
-			'undefined_1': 7
-		};
-
-		if(objects_match(test_object_1, test_object_1_duplicate) &&
-			objects_match(test_object_2, test_object_2_duplicate) &&
-			objects_match(result_object_3, result_object_3_expected)) {
-			console.log('PASS test_deep_merge_new_object');
-		}
-		else {
-			console.error('FAIL test_deep_merge_new_object');
-		}
-	};
-	test_deep_merge_new_object();
-
-	var test_special_cases = function () {
-
-		var result_object_4 = extend([{}, special_case_object_1, special_case_object_2], true);
-
-		var result_object_4_expected = {
-			'document': document,
-			'window': window,
-			'element': document.querySelector('body'),
-			'nodelist': Array.from(document.querySelectorAll('body'))
-		};
-
-		if(objects_match(result_object_4, result_object_4_expected)) {
-			console.log('PASS test_special_cases');
-		}
-		else {
-			console.error('FAIL test_special_cases');
-		}
-	};
-	test_special_cases();
-};
-test();
+			throw new Error();
+		});
+	});
+});

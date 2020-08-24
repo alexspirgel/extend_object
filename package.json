@@ -1,24 +1,32 @@
 {
   "name": "@alexspirgel/extend",
-  "version": "2.0.4",
+  "version": "3.0.0",
+  "author": "Alexander Spirgel",
   "description": "Extends an object with vanilla JavaScript.",
-  "main": "extend.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alexspirgel/extend.git"
-  },
+  "license": "MIT",
   "keywords": [
     "vanilla",
     "JavaScript",
     "extend",
     "deep",
-    "clone",
-    "object"
+    "clone"
   ],
-  "author": "Alexander Spirgel",
-  "license": "MIT",
+  "main": "extend.js",
+  "files": [
+    "/extend.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexspirgel/extend.git"
+  },
+  "homepage": "https://github.com/alexspirgel/extend#readme",
   "bugs": {
     "url": "https://github.com/alexspirgel/extend/issues"
   },
-  "homepage": "https://github.com/alexspirgel/extend#readme"
+  "scripts": {
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "mocha": "^8.1.1"
+  }
 }

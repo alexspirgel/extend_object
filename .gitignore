@@ -1,5 +1,1 @@
-# Linter Files
-.jshintrc
-
-# Text Editor Files
-*.sublime*
+node_modules

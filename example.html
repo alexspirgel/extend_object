@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Schema</title>
+		<script type="text/javascript" src="extend.js"></script>
+	</head>
+	<body>
+		Check the console for output.
+		<script type="text/javascript">
+			var value1 = {
+				a: 1,
+				b: 2,
+				c: {
+					a: 1,
+					b: 2
+				}
+			};
+			console.log('Initial value1', value1);
+			var value2 = {
+				b: 2,
+				c: {
+					b: 200,
+					c: 3
+				},
+				d: 4
+			};
+			console.log('Initial value2', value2);
+			var result = extend({}, value1, value2);
+			console.log('Result', result);
+			console.log('Unchanged value1', value1);
+			console.log('Unchanged value2', value2);
+		</script>
+	</body>
+</html>
