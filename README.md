@@ -20,7 +20,7 @@ const extend = require('@alexspirgel/extend');
 
 ### Using a script tag:
 
-Download the `extend.js` file.
+Download the `extend.js` file from the `/dist` folder.
 
 ```html
 <script src="path/to/extend.js"></script>
